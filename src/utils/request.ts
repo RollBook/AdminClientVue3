@@ -1,10 +1,14 @@
 import { storeToRefs } from 'pinia';
 import useStore from '@/store/index';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ElMessage } from 'element-plus';
+import axios, { AxiosResponse } from 'axios';
+import { useRouter } from 'vue-router';
 // pinia
 const sysUserStore = useStore().sysUser;
 const { token } = storeToRefs(sysUserStore);
+
+// router
+const router = useRouter();
 
 // 创建 axios 实例
 const service = axios.create({
@@ -15,7 +19,7 @@ const service = axios.create({
 
 // 设置允许跨域
 axios.defaults.withCredentials = true;
-  
+
 
 /** 请求拦截 */
 service.interceptors.request.use(
@@ -51,8 +55,11 @@ service.interceptors.response.use(
         message:error.response.data.msg,
         type:'error'
       })
+      if(error.response.status === 401) {
+        router.push({ path:'/login' });
+      }
     }
-  return Promise.reject(error);
+    return Promise.reject(error);
   }
 )
 

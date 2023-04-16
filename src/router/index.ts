@@ -28,6 +28,6 @@ export const constantRoutes: Array<RouteRecordRaw> = [
 const router = createRouter({
     history: createWebHistory(),
     routes: constantRoutes as RouteRecordRaw[],
-  });
+});
 
   export default router;

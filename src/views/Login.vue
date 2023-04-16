@@ -30,7 +30,6 @@
             </el-form>
 
         </el-card>
-        
 
     </div>
 </template>
@@ -38,14 +37,17 @@
 <script setup lang="ts">
 import { ref,reactive } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { ElMessage,FormInstance,FormRules } from 'element-plus';
 import useStore from '@/store/index';
 import type { LoginForm } from '@/api/login/types'
 import { sysUserLogin } from '@/api/login/index';
-import { ElMessage,FormInstance,FormRules } from 'element-plus';
-import router from '@/router';
+
 // pinia
 const sysUserStore = useStore().sysUser;
 const { sysUserName,token } = storeToRefs(sysUserStore);
+// router
+const router = useRouter();
 
 // 声明表单对象，定义验证规则
 const ruleFormRef = ref<FormInstance>();
@@ -80,7 +82,7 @@ async function submit(formEl: FormInstance | undefined) {
           if(ret.status === 200) {
             sysUserName.value = loginForm.name;
             token.value = ret.data.data;
-            router.push('/home').then(()=>{
+            router.push({ path:'/home' }).then(()=>{
                 ElMessage({
                 message: `${sysUserName.value},欢迎回来`,
                 type: 'success'
@@ -98,7 +100,6 @@ async function submit(formEl: FormInstance | undefined) {
                 type: 'error'
             });
         }
-        
         
   })
     
