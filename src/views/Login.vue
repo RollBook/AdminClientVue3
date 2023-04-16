@@ -37,14 +37,22 @@
 
 <script setup lang="ts">
 import { ref,reactive } from 'vue';
+import { storeToRefs } from 'pinia';
+import useStore from '@/store/index';
+import type { LoginForm } from '@/api/login/types'
+import { sysUserLogin } from '@/api/login/index';
 import { ElMessage,FormInstance,FormRules } from 'element-plus';
+import router from '@/router';
+// pinia
+const sysUserStore = useStore().sysUser;
+const { sysUserName,token } = storeToRefs(sysUserStore);
 
 // 声明表单对象，定义验证规则
 const ruleFormRef = ref<FormInstance>();
-const loginForm = reactive({
+const loginForm = reactive<LoginForm>({
   name: '',
   password: ''
-})
+});
 
 const rules = reactive<FormRules>({
     name: [
@@ -55,21 +63,35 @@ const rules = reactive<FormRules>({
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 6, max: 20, message: '密码长度应为6到20的数', trigger: 'blur' }
     ]
-})
+});
 
 // 提交表单
 async function submit(formEl: FormInstance | undefined) {
-    if (!formEl) return
+    if (!formEl) return;
+    
+    // 校验表单
     await formEl.validate(async function (valid, fields) {   
         if (valid) {
-          
+          // 表单校验通过，提交表单
+          const ret = await sysUserLogin(loginForm);
+
+          // 登录成功，用户信息加入缓存，并跳转到主页
+          if(ret.status === 200) {
+            sysUserName.value = loginForm.name;
+            token.value = ret.data.data;
+            await router.push('/home').then(()=>{
+                ElMessage({
+                message: `${sysUserName.value},欢迎回来`,
+                type: 'success'
+              });
+            });
+          } 
+        } 
         
-        } else {
-            ElMessage({
+        ElMessage({
                 message: '请补全信息',
                 type: 'error'
-            })
-        }
+        });
   })
     
 }
