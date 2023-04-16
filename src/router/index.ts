@@ -6,6 +6,11 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         path:  '/',
         redirect: '/homepage'
     },
+
+    {
+        path:   '/login',
+        component:  ()=>import('@/views/Login.vue')
+    },
     
     {
         path: '/home',
