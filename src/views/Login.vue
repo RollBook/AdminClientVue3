@@ -71,6 +71,7 @@ async function submit(formEl: FormInstance | undefined) {
     
     // 校验表单
     await formEl.validate(async function (valid, fields) {   
+        
         if (valid) {
           // 表单校验通过，提交表单
           const ret = await sysUserLogin(loginForm);
@@ -79,19 +80,26 @@ async function submit(formEl: FormInstance | undefined) {
           if(ret.status === 200) {
             sysUserName.value = loginForm.name;
             token.value = ret.data.data;
-            await router.push('/home').then(()=>{
+            router.push('/home').then(()=>{
                 ElMessage({
                 message: `${sysUserName.value},欢迎回来`,
                 type: 'success'
               });
             });
-          } 
-        } 
-        
-        ElMessage({
+          } else {
+            ElMessage({
+                message: '登录失败',
+                type: 'error'
+            });
+          }
+        } else {
+            ElMessage({
                 message: '请补全信息',
                 type: 'error'
-        });
+            });
+        }
+        
+        
   })
     
 }
