@@ -1,7 +1,5 @@
-import path from 'path';
 import { storeToRefs } from 'pinia';
-import useStore from '@/store/index';
-import { ElMessageBox } from 'element-plus';
+import useStore from '@/store';
 import { checkLogin } from '@/api/login';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 

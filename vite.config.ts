@@ -10,5 +10,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve('./src')
     }
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        additionalData:  `@import "${path.resolve(__dirname, 'src/styles/index.less')}";`
+      }
+    }
   }
+  
 })

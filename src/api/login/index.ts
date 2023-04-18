@@ -1,9 +1,13 @@
 import request from '@/utils/request';
 import type { LoginForm } from './types';
-import type { AxiosPromise } from 'axios';
 
-/** 用户登录 */
-export async function sysUserLogin(form:LoginForm):AxiosPromise<ResRecord<string>> {
+/**
+ * 系统用户登录
+ * @param form 登录表单数据
+ * @returns ResponsePromise
+ */
+export async function sysUserLogin(form:LoginForm):ResponsePromise<string> {
+
     return await request({
         url: '/sys/login',
         method: 'POST',
@@ -11,8 +15,11 @@ export async function sysUserLogin(form:LoginForm):AxiosPromise<ResRecord<string
     });
 }
 
-/** 检查用户登录状态 */
-export async function checkLogin():AxiosPromise<ResRecord<null>> {
+/**
+ * 检查用户登录状态
+ * @returns ResponsePromise
+ */
+export async function checkLogin():ResponsePromise<null> {
     
     return await request({
         url: '/sys/check_login',
