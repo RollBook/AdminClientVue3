@@ -1,14 +1,9 @@
 import { storeToRefs } from 'pinia';
-import useStore from '@/store/index';
 import { ElMessage } from 'element-plus';
 import axios, { AxiosResponse } from 'axios';
-import { useRouter } from 'vue-router';
-// pinia
-const sysUserStore = useStore().sysUser;
-const { token } = storeToRefs(sysUserStore);
+import useStore from '@/store';
+import router from '@/router';
 
-// router
-const router = useRouter();
 
 // 创建 axios 实例
 const service = axios.create({
@@ -23,7 +18,12 @@ axios.defaults.withCredentials = true;
 
 /** 请求拦截 */
 service.interceptors.request.use(
+  
   (config) => {
+    // pinia
+    const sysUserStore = useStore().sysUser;
+    const { token } = storeToRefs(sysUserStore);
+
     if (!config.headers) { throw new Error(`config不能为空`) }
     
     if (config.url === '/sys/login') { return config }
@@ -50,12 +50,19 @@ service.interceptors.response.use(
     return response;
   },
   (error: any)=>{
+    // pinia
+    const sysUserStore = useStore().sysUser;
+    const { token } = storeToRefs(sysUserStore);
+    // router
+    // const router = useRouter();
+
     if(error instanceof Object && error.hasOwnProperty('response')) {
       ElMessage({
         message:error.response.data.msg,
         type:'error'
-      })
+      });
       if(error.response.status === 401) {
+        token.value = '';
         router.push({ path:'/login' });
       }
     }
