@@ -39,9 +39,9 @@ import { ref,reactive } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { ElMessage,FormInstance,FormRules } from 'element-plus';
-import useStore from '@/store/index';
+import useStore from '@/store';
 import type { LoginForm } from '@/api/login/types'
-import { sysUserLogin } from '@/api/login/index';
+import { sysUserLogin } from '@/api/login';
 
 // pinia
 const sysUserStore = useStore().sysUser;

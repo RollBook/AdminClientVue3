@@ -8,5 +8,14 @@ export async function sysUserLogin(form:LoginForm):AxiosPromise<ResRecord<string
         url: '/sys/login',
         method: 'POST',
         data:form
-    })
+    });
+}
+
+/** 检查用户登录状态 */
+export async function checkLogin():AxiosPromise<ResRecord<null>> {
+    
+    return await request({
+        url: '/sys/check_login',
+        method: 'GET'
+    });
 }
