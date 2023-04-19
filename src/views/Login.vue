@@ -42,9 +42,13 @@ import { ElMessage,FormInstance,FormRules } from 'element-plus';
 import useStore from '@/store';
 import type { LoginForm } from '@/api/login/types'
 import { sysUserLogin } from '@/api/login';
+import { isValidKey } from '@/utils/tsutil';
+
 
 // pinia
-const sysUserStore = useStore().sysUser;
+const store = useStore();
+const sysMenuStore = store.sysMenu;
+const sysUserStore = store.sysUser;
 const { sysUserName,token } = storeToRefs(sysUserStore);
 // router
 const router = useRouter();
@@ -80,6 +84,15 @@ async function submit(formEl: FormInstance | undefined) {
 
           // 登录成功，用户信息加入缓存，并跳转到主页
           if(ret.status === 200) {
+
+            // 遍历pinia，重置所有缓存
+            for (const key in store) {
+                if (isValidKey(key,store)) {
+                    store[key].$reset();
+                }
+            }
+
+            // 当前用户信息存入缓存
             sysUserName.value = loginForm.name;
             token.value = ret.data.data;
             router.push({ path:'/home' }).then(()=>{

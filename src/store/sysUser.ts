@@ -4,8 +4,8 @@ export default defineStore('sysUser', {
     state: () => {
         return {
             sysUserName: '',// 用户名
-            token:''
-        }
+            token:'',       // JWT
+        };
     },
     persist:true
 })

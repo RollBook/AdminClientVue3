@@ -10,3 +10,4 @@ declare interface ResRecord<T> {
 /** 封装后端响应promise */
 declare type ResponsePromise<T> = 
     import('axios').AxiosPromise<ResRecord<T>>
+

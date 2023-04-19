@@ -11,7 +11,7 @@ import avatar from '@/assets/ROBOK.jpg';
 </script>
 
 <style lang="less" scoped>
-#header-container {
+#header-container { 
     position: relative;
     height: 100%;
 
