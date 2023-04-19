@@ -18,7 +18,7 @@ import avatar from '@/assets/ROBOK.jpg';
     .logo {
         position: absolute;
         cursor: pointer;
-        left: 1%;
+        left: 15px;
         top: 50%;
         transform: translate(0,-50%);
         height: 70%;
