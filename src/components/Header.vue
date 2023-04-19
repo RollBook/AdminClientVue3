@@ -11,14 +11,14 @@ import avatar from '@/assets/ROBOK.jpg';
 </script>
 
 <style lang="less" scoped>
-#header-container {
+#header-container { 
     position: relative;
     height: 100%;
 
     .logo {
         position: absolute;
         cursor: pointer;
-        left: 1%;
+        left: 15px;
         top: 50%;
         transform: translate(0,-50%);
         height: 70%;

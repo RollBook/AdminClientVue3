@@ -20,13 +20,13 @@ axios.defaults.withCredentials = true;
 service.interceptors.request.use(
   
   (config) => {
+    if (config.url === '/sys/login') { return config }
+
     // pinia
     const sysUserStore = useStore().sysUser;
     const { token } = storeToRefs(sysUserStore);
 
     if (!config.headers) { throw new Error(`config不能为空`) }
-    
-    if (config.url === '/sys/login') { return config }
 
     config.headers["token"] = token.value
     return config
@@ -40,7 +40,7 @@ service.interceptors.request.use(
 /** 响应拦截 */
 service.interceptors.response.use(
   (response: AxiosResponse<ResRecord<any>>):AxiosResponse<ResRecord<any>>=>{
-    
+
     if(response.status !== 200) {
       ElMessage({
         message:response.data.data,
@@ -50,23 +50,18 @@ service.interceptors.response.use(
     return response;
   },
   (error: any)=>{
-    // pinia
-    const sysUserStore = useStore().sysUser;
-    const { token } = storeToRefs(sysUserStore);
-    // router
-    // const router = useRouter();
 
     if(error instanceof Object && error.hasOwnProperty('response')) {
-      ElMessage({
-        message:error.response.data.msg,
-        type:'error'
-      });
       if(error.response.status === 401) {
-        token.value = '';
-        router.push({ path:'/login' });
+        router.push('/login');
+        ElMessage({
+          message:'认证失败',
+          type:'error'
+        })
       }
+      return error.response;
     }
-    return Promise.reject(error);
+
   }
 )
 

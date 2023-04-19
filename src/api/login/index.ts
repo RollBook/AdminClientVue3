@@ -19,10 +19,13 @@ export async function sysUserLogin(form:LoginForm):ResponsePromise<string> {
  * 检查用户登录状态
  * @returns ResponsePromise
  */
-export async function checkLogin():ResponsePromise<null> {
+export async function checkPageAuth(route:string):ResponsePromise<null> {
     
     return await request({
-        url: '/sys/check_login',
-        method: 'GET'
+        url: '/sys/check/page_auth',
+        method: 'GET',
+        params:{
+            url:route
+        }
     });
 }
