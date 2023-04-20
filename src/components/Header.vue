@@ -1,12 +1,22 @@
 <template>
     <div id="header-container">
-        <el-image fit="fill" class="logo" :src="avatar" />
+        <el-image 
+        fit="fill" 
+        class="logo" 
+        @click="backHome"
+        :src="avatar" />
     </div>
     
 </template>
 
 <script setup lang="ts">
 import avatar from '@/assets/ROBOK.jpg';
+import router from '@/router';
+
+// 点击左上角logo返回主页
+function backHome() {
+    router.push('/');
+}
 
 </script>
 

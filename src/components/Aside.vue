@@ -12,10 +12,15 @@
 
             <!-- 子菜单icon -->
             <template #title>
+                    <!-- 添加icon -->
                     <el-icon>
-                    <!-- TODO: 添加icon -->
+                        <Avatar v-if="item.id === MenuID.UserManage" />
+                        <Notebook v-if="item.id === MenuID.BookManage" />
+                        <Ticket v-if="item.id === MenuID.Announcement" />
+                        <Tickets v-if="item.id === MenuID.OrderManage" />
+                        <Operation v-if="item.id === MenuID.MachineManage" />
                     </el-icon>
-                <span>{{item.itemName}}</span>
+                <span> {{item.itemName}} </span>
             </template>
 
             <!-- 子菜单子项 -->
@@ -34,11 +39,18 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getMenuListByAuthority } from '@/api/aside';
-import type { MenuItem } from '@/api/aside/types';
+import { MenuItem,MenuID } from '@/api/aside/types';
 import useStore from '@/store';
 import router from '@/router';
+import {
+  Avatar,
+  Notebook,
+  Tickets,
+  Operation,
+  Ticket
+} from '@element-plus/icons-vue'
 
 // pinia
 const sysMenuStore = useStore().sysMenu;
@@ -54,6 +66,12 @@ onMounted(async()=>{
     } else {
         // 未命中缓存，则获取菜单
         const list = (await getMenuListByAuthority()).data.data;
+        // 为查询信息页面映射初始页码
+        list.forEach(item =>{
+            item.children.forEach(innerItem =>{
+                if(innerItem.path.includes('/list')) { innerItem.path+='?pageNum=1&pageSize=12'; }
+            })
+        })
         menuItems.value = list;
         menuList.value = list;
     }
@@ -65,7 +83,7 @@ const { selectedPath } = storeToRefs(sysMenuStore);
 const routerToWatch = ref(router.currentRoute)
 
 watch(routerToWatch,() => {
-    selectedPath.value = routerToWatch.value.fullPath;
+    selectedPath.value = routerToWatch.value.path;
 })
 
 </script>

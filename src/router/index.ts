@@ -90,23 +90,23 @@ export const constantRoutes: Array<RouteRecordRaw> = [
             /** 机器管理 */
             {
                 path:   '/machine/list',
-                component:  import('@/views/machine/MachineList.vue')
+                component:  ()=>import('@/views/machine/MachineList.vue')
             },
 
             {
                 path:   '/general/machine_manage',
-                component:  import('@/views/machine/GeneralMachineManage.vue')
+                component:  ()=>import('@/views/machine/GeneralMachineManage.vue')
             },
 
             /** 公告管理 */
             {
                 path:   '/announcement/list',
-                component:  import('@/views/announcement/AnnouncementList.vue')
+                component:  ()=>import('@/views/announcement/AnnouncementList.vue')
             },
 
             {
                 path:   '/event/list',
-                component:  import('@/views/announcement/EventList.vue')
+                component:  ()=>import('@/views/announcement/EventList.vue')
             }
                 ]
     },
@@ -127,7 +127,7 @@ const whiteList:string[] =
 router.beforeEach(async(to, from, next) => {
     // pinia
     const sysUserStore = useStore().sysUser;
-
+    
     // 判断是否去登录页
     if (whiteList.includes(to.path)) {
         next();
