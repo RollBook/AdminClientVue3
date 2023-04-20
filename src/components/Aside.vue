@@ -57,7 +57,6 @@ const sysMenuStore = useStore().sysMenu;
 
 /** 获取并渲染菜单列表 */
 let menuItems = ref<MenuItem[]>();
-const MenuIDEnum = ref<MenuID>();
 onMounted(async()=>{
     const { menuList } = storeToRefs(sysMenuStore);
     

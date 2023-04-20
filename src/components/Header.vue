@@ -15,7 +15,7 @@ import router from '@/router';
 
 // 点击左上角logo返回主页
 function backHome() {
-    router.push('/homepage');
+    router.push('/');
 }
 
 </script>
