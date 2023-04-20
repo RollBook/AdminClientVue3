@@ -12,7 +12,7 @@ declare type ResponsePromise<T> =
     import('axios').AxiosPromise<ResponseRecord<T>>
 
 /** 封装分页信息 PageInfo */
-declare interface PageInfo<T> {
+declare interface PageInfo<T extends Object = Object> {
     pageNum         :number,    // 当前页的页码
     pageSize        :number,    // 每页显示的条数
     size            :number,    // 当前页显示的真实条数
