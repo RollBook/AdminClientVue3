@@ -3,11 +3,14 @@
         <Breadcrumb bread-route="书本列表" />
 
         <CustomTable 
+        :default-method="getBookList"
+        :search-method="getBookByName"
         class="custom-table">
             <el-table-column prop="bookId" show-overflow-tooltip label="ID" />
             <el-table-column prop="openId" show-overflow-tooltip label="openID" />
             <el-table-column prop="bookName" show-overflow-tooltip label="书本名称" />
-            <el-table-column prop="price" label="书本价格" />
+            <el-table-column sortable="custom"
+            prop="price" label="书本价格" />
             <el-table-column prop="pressId" label="出版社id" />
             <el-table-column prop="status" label="书本状态" />
             <el-table-column prop="audit" label="审核状态" />
@@ -16,7 +19,8 @@
             <el-table-column prop="url2" show-overflow-tooltip label="背面URL" />
             <el-table-column prop="url3" show-overflow-tooltip label="扉页URL" />
             <el-table-column prop="description" show-overflow-tooltip label="书本描述" />
-            <el-table-column prop="timestamp" show-overflow-tooltip label="时间戳" />
+            <el-table-column sortable="custom"
+             prop="timestamp" show-overflow-tooltip label="时间戳" />
         </CustomTable>
     </div>
     
@@ -28,6 +32,7 @@
 import { onMounted, ref } from 'vue';
 import CustomTable from '@/components/CustomTable.vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import { getBookList,getBookByName } from '@/api/book';
 import type { Book } from "@/api/book/types";
 import router from '@/router';
 
