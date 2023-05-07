@@ -66,12 +66,6 @@ onMounted(async()=>{
     } else {
         // 未命中缓存，则获取菜单
         const list = (await getMenuListByAuthority()).data.data;
-        // 为查询信息页面映射初始页码
-        list.forEach(item =>{
-            item.children.forEach(innerItem =>{
-                if(innerItem.path.includes('/list')) { innerItem.path+='?pageNum=1&pageSize=12'; }
-            })
-        })
         menuItems.value = list;
         menuList.value = list;
     }

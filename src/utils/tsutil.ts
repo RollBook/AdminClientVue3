@@ -10,3 +10,4 @@ export function isValidKey<T extends Object>(
 ): key is keyof typeof object {
     return key in object;
 }
+

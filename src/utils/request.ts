@@ -39,7 +39,7 @@ service.interceptors.request.use(
 
 /** 响应拦截 */
 service.interceptors.response.use(
-  (response: AxiosResponse<ResRecord<any>>):AxiosResponse<ResRecord<any>>=>{
+  (response: AxiosResponse<ResponseRecord<any>>):AxiosResponse<ResponseRecord<any> >=>{
 
     if(response.status !== 200) {
       ElMessage({
