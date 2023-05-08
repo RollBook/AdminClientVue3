@@ -29,3 +29,11 @@ export async function checkPageAuth(route:string):ResponsePromise<null> {
         }
     });
 }
+
+
+export async function logoutSystem():ResponsePromise<string> {
+    return await request({
+        url: 'sys/logout',
+        method: 'GET'
+    })
+}
