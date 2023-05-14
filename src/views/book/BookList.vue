@@ -15,6 +15,7 @@
       <el-table-column prop="status" label="书本状态" />
       <el-table-column prop="audit" label="审核状态" />
       <el-table-column prop="tagId" label="标签ID" />
+      
       <el-table-column label="封面" align="center">
         <template #default="scope" #reference>
           <el-popover placement="top-start" :width="200" trigger="hover">
@@ -25,6 +26,7 @@
           </el-popover>
         </template>
       </el-table-column>
+
       <el-table-column label="背面" align="center">
         <template #default="scope">
           <el-popover placement="top-start" :width="200" trigger="hover">
@@ -35,6 +37,7 @@
           </el-popover>
         </template>
       </el-table-column>
+
       <el-table-column label="扉页" align="center">
         <template #default="scope">
           <el-popover placement="top-start" :width="200" trigger="hover">
